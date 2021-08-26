@@ -11,12 +11,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/checkout/">
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="form-validation.css" rel="stylesheet">
-
     <!-- FontAwesome -->
     <script src="https://kit.fontawesome.com/a310f58f3b.js" crossorigin="anonymous"></script>
     
@@ -33,6 +27,111 @@
       </div>
 
       <div class="row">
+
+        {% if distancia or pesovolumetrico or pesoreal%}
+        <div class="col-md-4 order-md-2 mb-4">
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Costo mas bajo</span>
+          </h4>
+          <ul class="list-group mb-3">
+            {% if origen %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">Ciudad</h6>
+                  <small class="text-muted">Origen</small>
+                </div>
+                <span class="text-muted">{{origen}}</span>
+            </li>
+            {% endif %}
+            {% if destino %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">Ciudad</h6>
+                  <small class="text-muted">Destino</small>
+                </div>
+                <span class="text-muted">{{destino}}</span>
+            </li>
+            {% endif %}
+            {% if distancia %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Distancia</h6>
+                <small class="text-muted">km</small>
+              </div>
+              <span class="text-muted">{{distancia}} km</span>
+            </li>
+            {% endif %}
+            {% if zona %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Zona</h6>
+                <small class="text-muted">Numero</small>
+              </div>
+              <span class="text-muted">{{zona}}</span>
+            </li>
+            {% endif %}
+            {% if alto %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Alto</h6>
+                <small class="text-muted">cm</small>
+              </div>
+              <span class="text-muted">{{alto}} cm</span>
+            </li>
+            {% endif %}
+            {% if ancho %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Ancho</h6>
+                <small class="text-muted">cm</small>
+              </div>
+              <span class="text-muted">{{ancho}} cm</span>
+            </li>
+            {% endif %}
+            {% if largo %}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Largo</h6>
+                <small class="text-muted">cm</small>
+              </div>
+              <span class="text-muted">{{largo}} cm</span>
+            </li>
+            {% endif %}
+            {% if pesovolumetrico%}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Peso volumetrico</h6>
+                <small class="text-muted"></small>
+              </div>
+              <span class="text-muted">{{pesovolumetrico}}</span>
+            </li>
+            {%else%}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Peso volumetrico</h6>
+                <small class="text-muted">N/A</small>
+              </div>
+              <span class="text-muted">0</span>
+            </li>
+            {% endif %}
+            {% if pesoreal%}
+            <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <div>
+                <h6 class="my-0">Peso real</h6>
+                <small class="text-muted">kg</small>
+              </div>
+              <span class="text-muted">{{pesoreal}} kg</span>
+            </li>
+            {% endif %}
+            
+       
+            <li class="list-group-item d-flex justify-content-between">
+              <span>Mejor proveedor</span>
+              <strong>$20</strong>
+            </li>
+          </ul>
+        </div>
+        {% else %}
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Costo mas bajo</span>
@@ -40,45 +139,19 @@
           <ul class="list-group mb-3">
             <li class="list-group-item d-flex justify-content-between lh-condensed">
                 <div>
-                  <h6 class="my-0">Ciudad</h6>
-                  <small class="text-muted">Origen</small>
+                  <h6 class="my-0">Resultados</h6>
+                  <small class="text-muted">Información</small>
                 </div>
-                <span class="text-muted">Example</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                  <h6 class="my-0">Ciudad</h6>
-                  <small class="text-muted">Destino</small>
-                </div>
-                <span class="text-muted">Example</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Distancia</h6>
-                <small class="text-muted">km</small>
-              </div>
-              <span class="text-muted">8 km</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Peso de paquete</h6>
-                <small class="text-muted">Kg</small>
-              </div>
-              <span class="text-muted">12 kg</span>
-            </li>
-            
-       
-            <li class="list-group-item d-flex justify-content-between">
-              <span>Total (USD)</span>
-              <strong>$20</strong>
+                <span class="text-muted"></span>
             </li>
           </ul>
         </div>
+        {% endif %}
 
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Información de envio</h4>
-          <form class="needs-validation" method="POST" action="">
-
+          <form class="needs-validation" method="POST" action="{% url 'info' %}">
+            {% csrf_token %}
             <div class="row mb-5">
                 <div class="col-6">
                   <label for="country">Ciudad de origen</label>
@@ -94,7 +167,7 @@
                 </div>
                 <div class="col-6">
                     <label for="country">Ciudad de destino</label>
-                    <select class="custom-select d-block w-100" id="destino" id="destino" required>
+                    <select class="custom-select d-block w-100" id="destino" name="destino" required>
                       <option value="">Ciudad...</option>
                       {% for ciudad in ciudades %}
                         <option>{{ciudad.nombre}}</option>
@@ -137,10 +210,41 @@
                   </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-primary">Enviar</button>
+            <button type="submit" value="Send" class="btn btn-primary">Enviar</button>
           </form>
+          <div class="row mt-5">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Proveedor</th>
+                  <th scope="col">Precio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Proveedor Logistico 1</td>
+                  <td>{{proveedor1}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Proveedor Logistico 2</td>
+                  <td>{{proveedor2}}</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Proveedor Logistico 3</td>
+                  <td>{{proveedor3}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
         </div>
       </div>          
+      
+      
+
       <footer class="pt-3 text-muted text-center text-small">
         <p class="mb-1">&copy; 2021 HzCode</p>
         <ul class="list-inline">
@@ -154,10 +258,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <script>
+     <script>
       // Example starter JavaScript for disabling form submissions if there are invalid fields
       (function() {
         'use strict';

@@ -66,11 +66,20 @@ def info(request):
         ).filter(
             zona=zona
         )
-
+        
         proveedor1 = tarifa1[0].precio
         proveedor2 = tarifa2[0].precio
         proveedor3 = tarifa3[0].precio
                 
+        tarifas = [tarifa1, tarifa2, tarifa3]
+        menor = tarifas[0][0].precio
+        tarifaMasBaja= tarifa1
+        for tarifa in tarifas:
+            if tarifa[0].precio < tarifaMasBaja[0].precio:
+                tarifaMasBaja=tarifa
+        
+        mejorPro = tarifaMasBaja[0].proveedor
+
         context = {
             'ciudades':ciudades,
             'distancia': distancia,
@@ -85,6 +94,9 @@ def info(request):
             'proveedor1': proveedor1,
             'proveedor2': proveedor2,
             'proveedor3': proveedor3,
+            'menor':menor,
+            'mejorPro': mejorPro,
+
         }
 
         return render(request, 'pages/home.html', context)

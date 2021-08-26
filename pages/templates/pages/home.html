@@ -23,15 +23,19 @@
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://hzaratecode.com/flete.png"" alt="" width="72" height="72">
         <h2>Costo de envío</h2>
-        <p class="lead">Calcula el costo mas bajo de envio entre nuestros tres proveedores logisticos.</p>
+        <p class="lead">Calcula el costo más bajo de envío entre nuestros tres proveedores logísticos.</p>
       </div>
-
-      <div class="row">
-
+      <section id="cta-1">
+        {% if messages %}
+          {% include 'includes/messages.html' %}
+        {% endif %}
+      </section>
+      
+      <div class="row justify-content-around">
         {% if distancia or pesovolumetrico or pesoreal%}
-        <div class="col-md-4 order-md-2 mb-4">
+        <div class="col-5 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Costo mas bajo</span>
+            <span class="text-muted">Tu información</span>
           </h4>
           <ul class="list-group mb-3">
             {% if origen %}
@@ -130,44 +134,52 @@
               <strong>{{mejorPro}}</strong>
             </li>
           </ul>
-        </div>
-        {% else %}
-        <div class="col-md-4 order-md-2 mb-4">
-          <h4 class="d-flex justify-content-between align-items-center mb-3">
-            <span class="text-muted">Costo mas bajo</span>
-          </h4>
-          <ul class="list-group mb-3">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                  <h6 class="my-0">Resultados</h6>
-                  <small class="text-muted">Información</small>
-                </div>
-                <span class="text-muted"></span>
-            </li>
-          </ul>
-        </div>
+        </div>        
         {% endif %}
-
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Información de envio</h4>
-          <form class="needs-validation" method="POST" action="{% url 'info' %}">
-            {% csrf_token %}
-            <div class="row mb-5">
-                <div class="col-6">
-                  <label for="country">Ciudad de origen</label>
-                  <select class="custom-select d-block w-100" name="origen" id="origen" required>
-                    <option value="">Ciudad...</option>
-                    {% for ciudad in ciudades %}
-                      <option>{{ciudad.nombre}}</option>
-                    {% endfor %}
-                  </select>
-                  <div class="invalid-feedback">
-                    Porfavor seleccione una ciudad valida
-                  </div>
-                </div>
-                <div class="col-6">
-                    <label for="country">Ciudad de destino</label>
-                    <select class="custom-select d-block w-100" id="destino" name="destino" required>
+        
+        <div class="col-5 order-md-1">
+          {%if proveedor1 or proveedor2 or proveedor3%}
+            <div class="row justify-content-center">
+              <h4 class="mb-3">Tabla comparativa</h4>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Precio</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Proveedor Logistico 1</td>
+                    <td>{{proveedor1}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Proveedor Logistico 2</td>
+                    <td>{{proveedor2}}</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Proveedor Logistico 3</td>
+                    <td>{{proveedor3}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row mt-5">
+                <a href="{% url 'home' %}"><button class="btn btn-primary">Nueva consulta</button></a>
+              </div>
+            </div> 
+          {%else%}
+          <div class="row justify-content-center">
+            <h4 class="mb-3">Información de paquete</h4>
+            <form class="needs-validation" method="POST" action="{% url 'info' %}">
+              {% csrf_token %}
+              <div class="row mb-5">
+                  <div class="col-6">
+                    <label for="country">Ciudad de origen</label>
+                    <select class="custom-select d-block w-100" name="origen" id="origen" required>
                       <option value="">Ciudad...</option>
                       {% for ciudad in ciudades %}
                         <option>{{ciudad.nombre}}</option>
@@ -177,72 +189,57 @@
                       Porfavor seleccione una ciudad valida
                     </div>
                   </div>
-            </div>
+                  <div class="col-6">
+                      <label for="country">Ciudad de destino</label>
+                      <select class="custom-select d-block w-100" id="destino" name="destino" required>
+                        <option value="">Ciudad...</option>
+                        {% for ciudad in ciudades %}
+                          <option>{{ciudad.nombre}}</option>
+                        {% endfor %}
+                      </select>
+                      <div class="invalid-feedback">
+                        Porfavor seleccione una ciudad valida
+                      </div>
+                    </div>
+              </div>
 
-            <h5 class="mb-2">Medidas y peso del paquete</h5>
-            <div class="row mb-5">
-                <div class="col-3">
-                  <label for="firstName">Alto</label>
-                  <input type="text" class="form-control" name="alto" id="alto" placeholder="cm" value="" required>
-                  <div class="invalid-feedback">
-                    Este campo es necesario
+              <h5 class="mb-2">Medidas y peso</h5>
+              <div class="row mb-5">
+                  <div class="col-3">
+                    <label for="firstName">Alto</label>
+                    <input type="text" class="form-control" name="alto" id="alto" placeholder="cm" value="" required>
+                    <div class="invalid-feedback">
+                      Este campo es necesario
+                    </div>
                   </div>
-                </div>
-                <div class="col-3">
-                  <label for="lastName">Ancho</label>
-                  <input type="text" class="form-control" name="ancho" id="ancho" placeholder="cm" value="" required="">
-                  <div class="invalid-feedback">
-                    Este campo es necesario
+                  <div class="col-3">
+                    <label for="lastName">Ancho</label>
+                    <input type="text" class="form-control" name="ancho" id="ancho" placeholder="cm" value="" required="">
+                    <div class="invalid-feedback">
+                      Este campo es necesario
+                    </div>
                   </div>
-                </div>
-                <div class="col-3">
-                  <label for="lastName">Largo</label>
-                  <input type="text" class="form-control" name="largo" id="largo" placeholder="cm" value="" required="">
-                  <div class="invalid-feedback">
-                    Este campo es necesario
+                  <div class="col-3">
+                    <label for="lastName">Largo</label>
+                    <input type="text" class="form-control" name="largo" id="largo" placeholder="cm" value="" required="">
+                    <div class="invalid-feedback">
+                      Este campo es necesario
+                    </div>
                   </div>
-                </div>
-                <div class="col-3">
-                  <label for="lastName">Peso</label>
-                  <input type="text" class="form-control" name="peso" id="peso" placeholder="kg" value="" required="">
-                  <div class="invalid-feedback">
-                    Este campo es necesario
+                  <div class="col-3">
+                    <label for="lastName">Peso</label>
+                    <input type="text" class="form-control" name="peso" id="peso" placeholder="kg" value="" required="">
+                    <div class="invalid-feedback">
+                      Este campo es necesario
+                    </div>
                   </div>
-                </div>
-            </div>
-            <button type="submit" value="Send" class="btn btn-primary">Enviar</button>
-          </form>
-          {%if proveedor1 or proveedor2 or proveedor3%}
-          <div class="row mt-5">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Proveedor</th>
-                  <th scope="col">Precio</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Proveedor Logistico 1</td>
-                  <td>{{proveedor1}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Proveedor Logistico 2</td>
-                  <td>{{proveedor2}}</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Proveedor Logistico 3</td>
-                  <td>{{proveedor3}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          {%endif%} 
+              </div>
+              <button type="submit" value="Send" class="btn btn-primary">Enviar</button>
+            </form>
+          </div>          
+          {%endif%}
         </div>
+
       </div>          
       
       
@@ -257,6 +254,9 @@
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
+    <script src="https://hzaratecode.com/jquery.min.js"></script>
+    <script src="https://hzaratecode.com/jquery.easing.min.js"></script>
+    <script src="https://hzaratecode.com/bootstrap.min.js"></script>
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>

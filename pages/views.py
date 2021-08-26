@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Ciudades, Distancias, Zonas, Tarifas
+from django.contrib import messages
+
 # Create your views here.
 
 def home(request):
@@ -18,6 +20,10 @@ def info(request):
         largo = request.POST['largo']
         peso = request.POST['peso']
 
+        if origenRe == destinoRe:
+            messages.error(request, 'No se puede realizar el envio a una misma ciudad') 
+            return redirect('home')
+            
         origen = Ciudades.objects.get(nombre=origenRe)
         destino = Ciudades.objects.get(nombre=destinoRe)
 
@@ -38,11 +44,15 @@ def info(request):
         pesoreal = round(int(peso))
         
         pesoAbsoluto = 0
-        if pesovolumetrico >= pesoreal:
+        if pesovolumetrico >= pesoreal and pesovolumetrico <= 70:
             pesoAbsoluto = pesovolumetrico
         else:
             pesoAbsoluto = pesoreal
-
+        
+        if pesoAbsoluto > 70 and pesoreal > 70:
+            messages.error(request, 'Más de 70 kilos volumetricos no se puede realizar el envio')
+            return redirect('home')
+    
         tarifa1 = Tarifas.objects.filter(
             proveedor=1
         ).filter(
@@ -96,7 +106,6 @@ def info(request):
             'proveedor3': proveedor3,
             'menor':menor,
             'mejorPro': mejorPro,
-
         }
 
         return render(request, 'pages/home.html', context)
